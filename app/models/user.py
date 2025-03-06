@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from models.session import Session
+from models.qr_code import QRCode
 from db import db
 
 class User(db.Model):
@@ -10,3 +11,4 @@ class User(db.Model):
   password: Mapped[str] = mapped_column(db.String, nullable=True)
 
   session: Mapped['Session'] = relationship('Session', back_populates='user', uselist=False, cascade='all, delete')
+  qr_codes: Mapped['QRCode'] = relationship('QRCode', back_populates='qr_code', uselist=True, cascade='all, delete')
