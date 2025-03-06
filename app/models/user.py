@@ -10,5 +10,5 @@ class User(db.Model):
   email: Mapped[str] = mapped_column(db.String, unique=True, nullable=False)
   password: Mapped[str] = mapped_column(db.String, nullable=True)
 
-  session: Mapped['Session'] = relationship('Session', back_populates='user', uselist=False, cascade='all, delete')
-  qr_codes: Mapped['QRCode'] = relationship('QRCode', back_populates='qr_code', uselist=True, cascade='all, delete')
+  session: Mapped['Session'] = relationship(back_populates='user')
+  qr_codes: Mapped[list['QRCode']] = relationship(back_populates='user')
