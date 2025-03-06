@@ -1,17 +1,20 @@
-from flask import Blueprint
+from flask import Blueprint, request
+from api.exceptions import BadRequestException
 from services.auth import actions, Credentials
 
 router = Blueprint('auth', __name__, url_prefix='/auth')
 
 @router.get('/sign-in')
 def sign_in():
-  credentials = Credentials()
-  credentials.email = 'aleshapavlov9@gmail.com'
-  credentials.password = '12345678'
+  try: 
+    body = request.json
+    credentials = Credentials(**body)
 
-  token = actions.sign_in(credentials)
+    token = actions.sign_in(credentials)
 
-  return { 'Message': 'Sign in', 'token': token }
+    return { 'Message': 'Sign in', 'token': token }
+  except:
+    raise BadRequestException
 
 @router.get('/sign-up')
 def sign_up():

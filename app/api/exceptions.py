@@ -1,5 +1,6 @@
-from werkzeug.exceptions import Unauthorized, NotFound, Conflict
+from werkzeug.exceptions import BadRequest, Unauthorized, NotFound, Conflict
 
-UnauthorizedException = Unauthorized
-NotFoundException = NotFound(404)
-ConflictException = Conflict(409)
+BadRequestException = BadRequest()
+UnauthorizedException = Unauthorized()
+NotFoundException = NotFound()
+ConflictException = Conflict()
