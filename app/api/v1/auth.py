@@ -1,10 +1,11 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, Response
+from pydantic import ValidationError
 from api.exceptions import BadRequestException
 from services.auth import actions, Credentials
 
 router = Blueprint('auth', __name__, url_prefix='/auth')
 
-@router.get('/sign-in')
+@router.post('/sign-in')
 def sign_in():
   try: 
     body = request.json
@@ -12,16 +13,18 @@ def sign_in():
 
     token = actions.sign_in(credentials)
 
-    return { 'Message': 'Sign in', 'token': token }
-  except:
+    return Response("{}", headers={ 'Authorization': token })
+  except ValidationError:
     raise BadRequestException
 
-@router.get('/sign-up')
+@router.post('/sign-up')
 def sign_up():
-  credentials = Credentials()
-  credentials.email = 'aleshapavlov9@gmail.com'
-  credentials.password = '12345678'
+  try:
+    body = request.json
+    credentials = Credentials(**body)
 
-  token = actions.sign_up(credentials)
+    token = actions.sign_up(credentials)
 
-  return { 'Message': 'Sign up', 'token': token }
+    return Response("{}", headers={ 'Authorization': token })
+  except ValidationError:
+    raise BadRequestException
