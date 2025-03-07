@@ -1,9 +1,9 @@
-from flask import Blueprint, request
-from pydantic import ValidationError
-from api.exceptions import BadRequestException
 from services.auth.middlewares import auth_required
-from services.analytics import ScanJSON, scan_qr_code
 from shared.utils.datetime import get_time_from_iso
+from services.analytics import ScanJSON, scan_qr_code
+from api.exceptions import BadRequestException
+from pydantic import ValidationError
+from flask import Blueprint, request
 
 router = Blueprint('analytics', __name__, url_prefix='/analytics')
 
@@ -20,5 +20,6 @@ def scan():
     scan_qr_code(qr_code_id, date)
 
     return {}
+  
   except ValidationError:
     raise BadRequestException

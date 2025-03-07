@@ -8,8 +8,8 @@ def create_session(user_id: int):
   session = Session(user_id=user_id, token=token)
   return session
 
-def get_user_by_session_token(token: str):
-  user = User.query.filter_by(session=token).first()
-  if not user: raise UnauthorizedException
+def get_user_session_by_token(token: str):
+  session = Session.query.filter_by(token=token).first()
+  if not session: raise UnauthorizedException
 
-  return user
+  return session

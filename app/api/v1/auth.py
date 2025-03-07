@@ -14,6 +14,7 @@ def sign_in():
     token = actions.sign_in(credentials)
 
     return Response("{}", headers={ 'Authorization': token })
+  
   except ValidationError:
     raise BadRequestException
 
@@ -26,5 +27,6 @@ def sign_up():
     token = actions.sign_up(credentials)
 
     return Response("{}", headers={ 'Authorization': token })
+  
   except ValidationError:
     raise BadRequestException

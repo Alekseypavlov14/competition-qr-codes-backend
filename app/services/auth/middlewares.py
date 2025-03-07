@@ -1,4 +1,4 @@
-from services.auth.session import get_user_by_session_token
+from services.auth.session import get_user_session_by_token
 from services.auth.headers import get_auth_header
 from api.exceptions import UnauthorizedException
 from functools import wraps
@@ -9,7 +9,7 @@ def auth_required(function):
     token = get_auth_header()
     if not token: raise UnauthorizedException
     
-    get_user_by_session_token(token)
+    get_user_session_by_token(token)
 
     return function(*args, **kwargs)
   
