@@ -1,12 +1,14 @@
 from services.auth.session import get_user_by_session_token
-from shared.const import auth_header
+from services.auth.headers import get_auth_header
+from api.exceptions import UnauthorizedException
 from functools import wraps
-from flask import request
 
 def auth_required(function):
   @wraps(function)
   def decorated_function(*args, **kwargs):
-    token = request.headers.get(auth_header)
+    token = get_auth_header()
+    if not token: raise UnauthorizedException
+    
     get_user_by_session_token(token)
 
     return function(*args, **kwargs)
