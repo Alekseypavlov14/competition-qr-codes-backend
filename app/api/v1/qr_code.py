@@ -6,8 +6,8 @@ from flask import Blueprint, request
 from services.auth.middlewares import auth_required
 from services.qr_code.dto import QRCodeDTO
 from services.qr_code.scan import ScanJSON
-from services.qr_code.qr_code import get_qr_code_dict
 from services.qr_code.actions import create_qr_code, scan_qr_code
+from services.serialization.qr_code import get_qr_code_dict
 
 # shared
 from shared.utils.datetime import get_time_from_iso
