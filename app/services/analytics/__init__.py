@@ -1,0 +1,1 @@
+from services.analytics.actions import get_qr_code_analytics

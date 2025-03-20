@@ -12,7 +12,6 @@ from services.qr_code.actions import create_qr_code, scan_qr_code
 # shared
 from shared.utils.datetime import get_time_from_iso
 from api.exceptions import BadRequestException
-from api.exceptions import BadRequestException
 
 router = Blueprint('qr_codes', __name__, url_prefix='/qr-codes')
 
