@@ -11,4 +11,5 @@ def get_qr_code_dict(qr_code: QRCode):
     "content": qr_code.content,
     "hash": qr_code.hash,
     "scans": scans,
+    "date": qr_code.date,
   })

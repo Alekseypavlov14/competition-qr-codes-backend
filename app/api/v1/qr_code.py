@@ -22,7 +22,7 @@ def create():
     body = request.json
     qr_code_dto = QRCodeDTO(**body)
 
-    qr_code = create_qr_code(qr_code_dto.content)
+    qr_code = create_qr_code(qr_code_dto)
     qr_code_dict = get_qr_code_dict(qr_code)
 
     return qr_code_dict
