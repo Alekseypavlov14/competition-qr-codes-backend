@@ -13,7 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = config.database_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # setup cors
-CORS(app)
+CORS(app, origins="*", allow_headers=["Authorization", "Content-Type"])
 
 # init app
 db.init_app(app)
