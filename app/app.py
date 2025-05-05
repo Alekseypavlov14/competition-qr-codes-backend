@@ -8,12 +8,12 @@ import api
 # create app
 app = Flask(__name__)
 
+# setup cors
+CORS(app, origins="*", allow_headers=["Authorization", "Content-Type"], methods=["GET", "POST", "OPTIONS"])
+
 # add db data
 app.config['SQLALCHEMY_DATABASE_URI'] = config.database_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# setup cors
-CORS(app, origins="*", allow_headers=["Authorization", "Content-Type"], methods=["GET", "POST", "OPTIONS"])
 
 # init app
 db.init_app(app)
