@@ -22,6 +22,12 @@ def handle_options():
     response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
     
     return response
+  
+# handle headers after request
+@app.after_request
+def handle_headers(response):
+  response.headers["Access-Control-Expose-Headers"] = "Authorization"
+  return response
 
 # add db data
 app.config['SQLALCHEMY_DATABASE_URI'] = config.database_uri
