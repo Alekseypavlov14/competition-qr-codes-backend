@@ -24,12 +24,14 @@ def get():
   try:
     token = get_auth_header()
     if not token: raise UnauthorizedException
+  except:
+    raise UnauthorizedException
 
+  try:
     qr_codes = get_qr_codes_by_token(token)
     qr_codes_dicts = map(get_qr_code_dict, qr_codes)
 
-    return list(qr_codes_dicts)
-  
+    return list(qr_codes_dicts)  
   except:
     raise BadRequestException
 
@@ -54,8 +56,13 @@ def get_by_id(id):
   try:
     qr_code = QRCode.query.filter_by(id=id).first()
     if not qr_code: raise NotFoundException
-
-    return get_qr_code_dict(qr_code)
   except:
-    BadRequestException
+    raise NotFoundException
+
+  try:
+    qr_code_dict = get_qr_code_dict(qr_code)
+
+    return qr_code_dict
+  except:
+    raise BadRequestException
   

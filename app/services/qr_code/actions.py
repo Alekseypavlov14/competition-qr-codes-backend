@@ -23,11 +23,11 @@ def create_qr_code(dto: QRCodeDTO):
 
   return qr_code
 
-def scan_qr_code(qr_code_id: int, date: datetime):
-  qr_code = QRCode.query.filter_by(id=qr_code_id).first()
+def scan_qr_code(hash: str, date: datetime):
+  qr_code = QRCode.query.filter_by(hash=hash).first()
   if not qr_code: raise NotFoundException
 
-  scan = Scan(qr_code_id=qr_code_id, date=date)
+  scan = Scan(qr_code_id=qr_code.id, date=date)
   if not scan: raise BadRequestException
 
   db.session.add(scan)

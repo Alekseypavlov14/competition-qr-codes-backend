@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 
 class ScanJSON(BaseModel):
-  qr_code_id: int
+  hash: str
   date: str

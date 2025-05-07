@@ -21,10 +21,10 @@ def scan():
     body = request.json
     scan_dto = ScanJSON(**body)
 
-    qr_code_id = scan_dto.qr_code_id
+    hash = scan_dto.hash
     date = get_time_from_iso(scan_dto.date)
 
-    scan_qr_code(qr_code_id, date)
+    scan_qr_code(hash, date)
 
     return {}
   
