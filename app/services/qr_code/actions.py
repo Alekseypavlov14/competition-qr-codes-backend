@@ -32,3 +32,5 @@ def scan_qr_code(hash: str, date: datetime):
 
   db.session.add(scan)
   db.session.commit()
+
+  return qr_code
