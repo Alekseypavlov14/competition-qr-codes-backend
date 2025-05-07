@@ -21,19 +21,13 @@ router = Blueprint('qr_codes', __name__, url_prefix='/qr-codes')
 @auth_required
 @router.get('/')
 def get():
-  try:
-    token = get_auth_header()
-    if not token: raise UnauthorizedException
-  except:
-    raise UnauthorizedException
+  token = get_auth_header()
+  if not token: raise UnauthorizedException
 
-  try:
-    qr_codes = get_qr_codes_by_token(token)
-    qr_codes_dicts = map(get_qr_code_dict, qr_codes)
+  qr_codes = get_qr_codes_by_token(token)
+  qr_codes_dicts = map(get_qr_code_dict, qr_codes)
 
-    return list(qr_codes_dicts)  
-  except:
-    raise BadRequestException
+  return list(qr_codes_dicts)  
 
 @auth_required
 @router.post('/')
@@ -53,16 +47,10 @@ def create():
 @auth_required
 @router.get('/<int:id>')
 def get_by_id(id):
-  try:
-    qr_code = QRCode.query.filter_by(id=id).first()
-    if not qr_code: raise NotFoundException
-  except:
-    raise NotFoundException
+  qr_code = QRCode.query.filter_by(id=id).first()
+  if not qr_code: raise NotFoundException
 
-  try:
-    qr_code_dict = get_qr_code_dict(qr_code)
+  qr_code_dict = get_qr_code_dict(qr_code)
 
-    return qr_code_dict
-  except:
-    raise BadRequestException
+  return qr_code_dict
   
