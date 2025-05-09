@@ -9,7 +9,7 @@ from models.qr_code import QRCode
 from services.auth.middlewares import auth_required
 from services.auth.headers import get_auth_header
 from services.qr_code.dto import QRCodeDTO
-from services.qr_code.actions import create_qr_code
+from services.qr_code.actions import create_qr_code, delete_qr_code
 from services.serialization.qr_code import get_qr_code_dict
 from services.users.actions import get_qr_codes_by_token
 
@@ -54,3 +54,12 @@ def get_by_id(id):
 
   return qr_code_dict
   
+@auth_required
+@router.delete('/<int:id>')
+def delete_by_id(id):
+  qr_code = delete_qr_code(id)
+  if not qr_code: raise NotFoundException
+
+  qr_code_dict = get_qr_code_dict(qr_code)
+  
+  return qr_code_dict

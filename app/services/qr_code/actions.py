@@ -34,3 +34,14 @@ def scan_qr_code(hash: str, date: datetime):
   db.session.commit()
 
   return qr_code
+
+def delete_qr_code(id: int):
+  qr_code_query = QRCode.query.filter_by(id=id)
+  qr_code = qr_code_query.first()
+
+  if not qr_code: raise NotFoundException
+
+  qr_code_query.delete()
+  db.session.commit()
+
+  return qr_code
