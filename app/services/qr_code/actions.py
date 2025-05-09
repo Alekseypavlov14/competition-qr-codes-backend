@@ -2,6 +2,7 @@ from services.auth.headers import get_auth_header
 from services.qr_code.hash import generate_unique_hash
 from services.auth.session import get_user_session_by_token
 from api.exceptions import UnauthorizedException, InternalServerException, BadRequestException, NotFoundException
+from services.serialization.qr_code import get_qr_code_dict
 from services.qr_code.dto import QRCodeDTO
 from models.qr_code import QRCode
 from models.scan import Scan
@@ -37,11 +38,13 @@ def scan_qr_code(hash: str, date: datetime):
 
 def delete_qr_code(id: int):
   qr_code_query = QRCode.query.filter_by(id=id)
+
   qr_code = qr_code_query.first()
+  qr_code_dict = get_qr_code_dict(qr_code)
 
   if not qr_code: raise NotFoundException
 
   qr_code_query.delete()
   db.session.commit()
 
-  return qr_code
+  return qr_code_dict

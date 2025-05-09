@@ -57,9 +57,6 @@ def get_by_id(id):
 @auth_required
 @router.delete('/<int:id>')
 def delete_by_id(id):
-  qr_code = delete_qr_code(id)
-  if not qr_code: raise NotFoundException
-
-  qr_code_dict = get_qr_code_dict(qr_code)
+  qr_code_dict = delete_qr_code(id)
   
   return qr_code_dict
