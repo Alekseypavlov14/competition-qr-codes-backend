@@ -41,3 +41,8 @@ def sign_up(credentials: Credentials) -> str:
   db.session.commit()
 
   return new_session.token
+
+def verify_token(token: str):
+  user = Session.query.filter_by(token=token).first()
+  if not user: raise UnauthorizedException
+  

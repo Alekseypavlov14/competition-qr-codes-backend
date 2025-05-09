@@ -1,6 +1,7 @@
 from flask import Blueprint, request, Response
 from pydantic import ValidationError
-from api.exceptions import BadRequestException
+from api.exceptions import BadRequestException, UnauthorizedException
+from services.auth.headers import get_auth_header
 from services.auth import actions, Credentials
 
 router = Blueprint('auth', __name__, url_prefix='/auth')
@@ -30,3 +31,12 @@ def sign_up():
   
   except ValidationError:
     raise BadRequestException
+
+@router.get('/verification')
+def verify_token():
+  token = get_auth_header()
+  if not token: raise UnauthorizedException
+
+  actions.verify_token(token)
+
+  return Response("{}", headers={ 'Authorization': token })
